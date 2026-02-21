@@ -32,7 +32,7 @@ src/
 
 ## Deployment
 
-A GitHub Actions workflow (`.github/workflows/deploy-vercel.yml`) deploys to Vercel on push to `main`. Required GitHub secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as Vercel environment variables.
+Deployed to [Vercel](https://vercel.com) via its GitHub integration — pushes to `main` trigger automatic deploys. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as environment variables in the Vercel project settings.
 
 ## License
 
