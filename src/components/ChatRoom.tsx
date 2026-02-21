@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./ChatRoom.module.css";
 import { useChatRoom } from "../hooks/useChatRoom";
+import { useMessageInput } from "../hooks/useMessageInput";
+import { formatTime } from "../lib/format";
 
 const rooms = ["general", "random", "tech"];
 
@@ -10,7 +12,6 @@ interface ChatRoomProps {
 
 export function ChatRoom({ username }: ChatRoomProps) {
   const [roomId, setRoomId] = useState("general");
-  const [messageInput, setMessageInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -22,24 +23,14 @@ export function ChatRoom({ username }: ChatRoomProps) {
     sendMessage,
   } = useChatRoom({ roomId, username });
 
+  const { messageInput, setMessageInput, handleSendMessage } = useMessageInput(
+    sendMessage,
+    isConnected
+  );
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = messageInput.trim();
-    if (trimmed && isConnected) {
-      await sendMessage(trimmed);
-      setMessageInput("");
-    }
-  };
-
-  const formatTime = (timestamp: string) =>
-    new Date(timestamp).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
 
   return (
     <div className={styles.container}>
@@ -71,23 +62,18 @@ export function ChatRoom({ username }: ChatRoomProps) {
         </div>
 
         <div className={styles.messages}>
-          {messages.map((msg) => {
-            const isOwn = msg.username === username;
-            const isSystem = msg.username === "System";
-
-            return (
-              <div
-                key={msg.id}
-                className={`${styles.message} ${isOwn ? styles.messageOwn : ""} ${isSystem ? styles.messageSystem : ""}`}
-              >
-                {!isSystem && (
-                  <span className={styles.messageUsername}>{msg.username}</span>
-                )}
-                {msg.message}
-                <span className={styles.messageTime}>{formatTime(msg.timestamp)}</span>
-              </div>
-            );
-          })}
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`${styles.message} ${msg.username === username ? styles.messageOwn : ""} ${msg.username === "System" ? styles.messageSystem : ""}`}
+            >
+              {msg.username !== "System" && (
+                <span className={styles.messageUsername}>{msg.username}</span>
+              )}
+              {msg.message}
+              <span className={styles.messageTime}>{formatTime(msg.timestamp)}</span>
+            </div>
+          ))}
           <div ref={messagesEndRef} />
         </div>
 

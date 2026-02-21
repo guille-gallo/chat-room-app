@@ -104,7 +104,9 @@ export function useChatRoom({
     channel.on("presence", { event: "join" }, ({ newPresences }) => {
       const joinedUsers = newPresences as unknown as PresenceUser[];
       joinedUsers.forEach((user) => {
-        if (user.odyseus !== userIdRef.current) {
+        const isSelf =
+          user.odyseus === userIdRef.current || user.username === username;
+        if (!isSelf) {
           setMessages((prev) => [
             ...prev,
             {
@@ -121,15 +123,19 @@ export function useChatRoom({
     channel.on("presence", { event: "leave" }, ({ leftPresences }) => {
       const leftUsers = leftPresences as unknown as PresenceUser[];
       leftUsers.forEach((user) => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: crypto.randomUUID(),
-            username: "System",
-            message: `${user.username} left the room`,
-            timestamp: new Date().toISOString(),
-          },
-        ]);
+        const isSelf =
+          user.odyseus === userIdRef.current || user.username === username;
+        if (!isSelf) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              username: "System",
+              message: `${user.username} left the room`,
+              timestamp: new Date().toISOString(),
+            },
+          ]);
+        }
       });
     });
 
