@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import { supabase } from "../lib/supabase";
+import { getSupabaseClient } from "@guille-gallo/auth-kit";
+
+const supabase = getSupabaseClient();
 
 export interface ChatMessage {
   id: string;

@@ -1,27 +1,27 @@
+import { AuthGate, useAuth } from "@guille-gallo/auth-kit";
 import { AppHeader } from "./components/AppHeader";
-import { AuthScreen } from "./components/AuthScreen";
 import { ChatRoom } from "./components/ChatRoom";
 import { LoadingScreen } from "./components/LoadingScreen";
-import { useAuth } from "./hooks/useAuth";
 
-export default function App() {
-  const { session, username, isLoading, authError, signInWithGoogle, signOut } =
-    useAuth();
-
-  if (isLoading) return <LoadingScreen />;
-
-  if (!session) {
-    return <AuthScreen error={authError} onSignIn={signInWithGoogle} />;
-  }
+function MainApp() {
+  const { session, displayName, signOut, authError } = useAuth();
 
   return (
     <main className="shell">
       <AppHeader
-        email={session.user.email ?? username}
+        email={session?.user.email ?? displayName}
         onSignOut={signOut}
       />
       {authError && <p className="error-text">{authError}</p>}
-      <ChatRoom username={username} />
+      <ChatRoom username={displayName} />
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthGate loader={<LoadingScreen />}>
+      <MainApp />
+    </AuthGate>
   );
 }
