@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@guille-gallo/auth-kit':
-        specifier: ^0.1.0
-        version: 0.1.0(@supabase/supabase-js@2.107.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^0.2.0
+        version: 0.2.0(@supabase/supabase-js@2.107.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@supabase/supabase-js':
         specifier: ^2.107.0
         version: 2.107.0
@@ -192,8 +192,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@guille-gallo/auth-kit@0.1.0':
-    resolution: {integrity: sha512-FnSbs8xK6NYkXDZoUdAAtvN3xSSK7RUB0vTnxTMChQcfnoYLg74sVPex8fCa9sHl8I+SrLLbt5tSwcP49Zqj0A==}
+  '@guille-gallo/auth-kit@0.2.0':
+    resolution: {integrity: sha512-G24V1Z7WbtBSujR0rfgNZ7I4NodUGCnhi1DxdQPE0vZ3jr7j5BGzQBtd4ve7N9bYBaotD8VIIyI60XzklThLoQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2
       react: ^19
@@ -570,7 +570,7 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@guille-gallo/auth-kit@0.1.0(@supabase/supabase-js@2.107.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@guille-gallo/auth-kit@0.2.0(@supabase/supabase-js@2.107.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@supabase/supabase-js': 2.107.0
       react: 19.2.7
